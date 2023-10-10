@@ -1,0 +1,27 @@
+comando: java -jar edsim51di.jar
+
+1. salvar a sequência estática
+2. LOOP:
+    - pegar dado digitado
+    - comparar com seq[i]
+    SE input != seq[i]:
+        RET
+        printDerrota
+    SENÃO:
+        CONTINUA
+
+//testar exibindo o que está em A
+
+compararDado:
+    MOV A, #40h
+    ADD A, R0
+    MOV R0, A
+    MOV A, @R0
+    CJNE A, #08, printDerrota
+    CJNE A, #03, printDerrota
+    CJNE A, #05, printDerrota
+    CJNE A, #09, printDerrota
+    CJNE A, #01, printDerrota
+    ACALL printVitoria;
+
+    

@@ -7,6 +7,11 @@ org 0000h
 
 org 0030h
 START:
+	MOV 30H, #8
+	MOV 31H, #3
+	MOV 32H, #5
+	MOV 33H, #9
+	MOV 34H, #1
 	MOV 40H, #'#' 
 	MOV 41H, #'0'
 	MOV 42H, #'*'
@@ -22,21 +27,75 @@ START:
 
 MAIN:
 	ACALL lcd_init
+	ACALL printTitulo	
 	ACALL printSeq
 ROTINA:
 	ACALL leituraTeclado
 	JNB F0, ROTINA   ;if F0 is clear, jump to ROTINA
-	MOV A, #01h
-	ACALL posicionaCursor	
-	MOV A, #40h
-	ADD A, R0
-	MOV R0, A
-	MOV A, @R0        
-	ACALL sendCharacter
+	;-----
+	ACALL compararDados
+	;MOV A, #01h
+	;ACALL posicionaCursor	
+	;MOV A, #40h
+	;ADD A, R0
+	;MOV R0, A
+	;MOV A, @R0        
+	;ACALL sendCharacter
 	CLR F0
 	JMP ROTINA
 
+compararDados:
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
+	CJNE A, #'8', printDerrota
+	CJNE A, #'3', printDerrota
+	CJNE A, #'5', printDerrota
+	CJNE A, #'9', printDerrota
+	CJNE A, #'1', printDerrota
+
+printTitulo:	
+	MOV A, #1
+	ACALL posicionaCursor
+	MOV A, #'J'
+	ACALL sendCharacter
+	MOV A, #'O'
+	ACALL sendCharacter
+	MOV A, #'G'
+	ACALL sendCharacter
+	MOV A, #'O'
+	ACALL sendCharacter
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #'D'
+	ACALL sendCharacter
+	MOV A, #'A'
+	ACALL sendCharacter
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #'M'
+	ACALL sendCharacter
+	MOV A, #'E'
+	ACALL sendCharacter
+	MOV A, #'M'
+	ACALL sendCharacter
+	MOV A, #'O'
+	ACALL sendCharacter
+	MOV A, #'R'
+	ACALL sendCharacter
+	MOV A, #'I'
+	ACALL sendCharacter
+	MOV A, #'A'
+	ACALL sendCharacter
+	RET
+
+
+
+
 printDerrota:
+	MOV A, #42
+	ACALL posicionaCursor
 	MOV A, #'P'
 	ACALL sendCharacter
 	MOV A, #'E'
@@ -49,6 +108,7 @@ printDerrota:
 	ACALL sendCharacter
 	MOV A, #'U'
 	ACALL sendCharacter
+	SJMP $
 
 printSeq:
 	ACALL PRINT8
@@ -62,6 +122,7 @@ printSeq:
 	ACALL PRINT1
 	ACALL delay
 	MOV P1, #0FFH
+	RET
 
 
 leituraTeclado:
