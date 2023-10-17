@@ -7,6 +7,7 @@ org 0000h
 
 org 0030h
 START:
+	MOV 50H, #0
 	MOV 30H, #8
 	MOV 31H, #3
 	MOV 32H, #5
@@ -27,33 +28,95 @@ START:
 
 MAIN:
 	ACALL lcd_init
-	ACALL printTitulo	
-	ACALL printSeq
+;	ACALL printTitulo	
+;	ACALL printSeq
 ROTINA:
 	ACALL leituraTeclado
-	JNB F0, ROTINA   ;if F0 is clear, jump to ROTINA
-	;-----
-	ACALL compararDados
-	;MOV A, #01h
-	;ACALL posicionaCursor	
-	;MOV A, #40h
-	;ADD A, R0
-	;MOV R0, A
-	;MOV A, @R0        
-	;ACALL sendCharacter
-	CLR F0
-	JMP ROTINA
-
-compararDados:
+	JNB F0, ROTINA
 	MOV A, #40h
 	ADD A, R0
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'8', printDerrota
+	MOV 50h, #8
+	CLR F0
+	ACALL delay
+	ROT2:
+	ACALL leituraTeclado
+	JNB F0, ROT2
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
 	CJNE A, #'3', printDerrota
+	MOV 50h, #3
+	CLR F0
+	ACALL delay
+	ROT3:
+	ACALL leituraTeclado
+	JNB F0, ROT3
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
 	CJNE A, #'5', printDerrota
+	MOV 50h, #5
+	CLR F0
+	ACALL delay
+	ROT4:
+	ACALL leituraTeclado
+	JNB F0, ROT4
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
 	CJNE A, #'9', printDerrota
+	MOV 50h, #9
+	CLR F0
+	ACALL delay
+	ROT5:
+	ACALL leituraTeclado
+	JNB F0, ROT5
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
 	CJNE A, #'1', printDerrota
+	MOV 50h, #1
+	CLR F0
+	ACALL delay
+	MOV A, #42
+	ACALL posicionaCursor
+	MOV A, #'V'
+	ACALL sendCharacter
+	MOV A, #'E'
+	ACALL sendCharacter
+	MOV A, #'N'
+	ACALL sendCharacter
+	MOV A, #'C'
+	ACALL sendCharacter
+	MOV A, #'E'
+	ACALL sendCharacter
+	MOV A, #'U'
+	ACALL sendCharacter
+	JMP $
+
+printDerrota:
+	MOV A, #42
+	ACALL posicionaCursor
+	MOV A, #'P'
+	ACALL sendCharacter
+	MOV A, #'E'
+	ACALL sendCharacter
+	MOV A, #'R'
+	ACALL sendCharacter
+	MOV A, #'D'
+	ACALL sendCharacter
+	MOV A, #'E'
+	ACALL sendCharacter
+	MOV A, #'U'
+	ACALL sendCharacter
+	SJMP $
 
 printTitulo:	
 	MOV A, #1
@@ -89,26 +152,6 @@ printTitulo:
 	MOV A, #'A'
 	ACALL sendCharacter
 	RET
-
-
-
-
-printDerrota:
-	MOV A, #42
-	ACALL posicionaCursor
-	MOV A, #'P'
-	ACALL sendCharacter
-	MOV A, #'E'
-	ACALL sendCharacter
-	MOV A, #'R'
-	ACALL sendCharacter
-	MOV A, #'D'
-	ACALL sendCharacter
-	MOV A, #'E'
-	ACALL sendCharacter
-	MOV A, #'U'
-	ACALL sendCharacter
-	SJMP $
 
 printSeq:
 	ACALL PRINT8
