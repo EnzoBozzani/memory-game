@@ -1,27 +1,8 @@
 comando: java -jar edsim51di.jar
 
-1. salvar a sequência estática
-2. LOOP:
-    - pegar dado digitado
-    - comparar com seq[i]
-    SE input != seq[i]:
-        RET
-        printDerrota
-    SENÃO:
-        CONTINUA
+1. problema do display hexadecimal no início (algo a ver com P1)
+2. deixar o LCD com prints melhores
+3. fazer nivel final 
 
-//testar exibindo o que está em A
-
-compararDado:
-    MOV A, #40h
-    ADD A, R0
-    MOV R0, A
-    MOV A, @R0
-    CJNE A, #08, printDerrota
-    CJNE A, #03, printDerrota
-    CJNE A, #05, printDerrota
-    CJNE A, #09, printDerrota
-    CJNE A, #01, printDerrota
-    ACALL printVitoria;
 
     
