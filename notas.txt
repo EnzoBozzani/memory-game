@@ -1,6 +1,6 @@
 comando: java -jar edsim51di.jar
 
-1. problema do display hexadecimal no início (algo a ver com P1)
+1. escrever o numero que o usuário digita 
 2. deixar o LCD com prints melhores
 3. fazer nivel final 
 
