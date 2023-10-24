@@ -5,4 +5,4 @@ comando: java -jar edsim51di.jar
 3. fazer nivel final 
 
 
-    
+3 7 9 2 5 4 1 0 6 8

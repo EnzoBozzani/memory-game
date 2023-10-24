@@ -24,11 +24,53 @@ START:
 	MOV 48H, #'4'
 	MOV 49H, #'3'
 	MOV 4AH, #'2'
-	MOV 4BH, #'1'	  
+	MOV 4BH, #'1'	
+	ACALL MAIN 
+ 
+printDerrota0:
+	MOV A, #3
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #5
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #7
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #9
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #11
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #44
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #'P'
+	ACALL sendCharacter
+	MOV A, #'E'
+	ACALL sendCharacter
+	MOV A, #'R'
+	ACALL sendCharacter
+	MOV A, #'D'
+	ACALL sendCharacter
+	MOV A, #'E'
+	ACALL sendCharacter
+	MOV A, #'U'
+	ACALL sendCharacter
+	SJMP $
+
+ponte0:
+	ACALL printDerrota0
 
 MAIN:
 	ACALL lcd_init
-	ACALL printTitulo	
 	ACALL printSeq
 ROTINA:
 	ACALL leituraTeclado
@@ -37,8 +79,12 @@ ROTINA:
 	ADD A, R0
 	MOV R0, A
 	MOV A, @R0
-	CJNE A, #'8', printDerrota
-	MOV 50h, #8
+	CJNE A, #'8', printDerrota0
+	MOV 50H, A
+	MOV A, #3
+	ACALL posicionaCursor
+	MOV A, 50H
+	ACALL sendCharacter
 	CLR F0
 	ACALL delay
 	ROT2:
@@ -48,8 +94,12 @@ ROTINA:
 	ADD A, R0
 	MOV R0, A
 	MOV A, @R0
-	CJNE A, #'3', printDerrota
-	MOV 50h, #3
+	CJNE A, #'3', printDerrota0
+	MOV 50H, A
+	MOV A, #5
+	ACALL posicionaCursor
+	MOV A, 50H
+	ACALL sendCharacter
 	CLR F0
 	ACALL delay
 	ROT3:
@@ -59,8 +109,12 @@ ROTINA:
 	ADD A, R0
 	MOV R0, A
 	MOV A, @R0
-	CJNE A, #'5', printDerrota
-	MOV 50h, #5
+	CJNE A, #'5', ponte0
+	MOV 50H, A
+	MOV A, #7
+	ACALL posicionaCursor
+	MOV A, 50H
+	ACALL sendCharacter
 	CLR F0
 	ACALL delay
 	ROT4:
@@ -71,7 +125,11 @@ ROTINA:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'9', printDerrota
-	MOV 50h, #9
+	MOV 50H, A
+	MOV A, #9
+	ACALL posicionaCursor
+	MOV A, 50H
+	ACALL sendCharacter
 	CLR F0
 	ACALL delay
 	ROT5:
@@ -82,11 +140,210 @@ ROTINA:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'1', printDerrota
-	MOV 50h, #1
+	MOV 50H, A
+	MOV A, #11
+	ACALL posicionaCursor
+	MOV A, 50H
+	ACALL sendCharacter
 	CLR F0
 	ACALL delay
-	MOV A, #42
+	MOV A, #3
 	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #5
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #7
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #9
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #11
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #44
+	ACALL posicionaCursor
+	MOV A, #'N'
+	ACALL sendCharacter
+	MOV A, #'I'
+	ACALL sendCharacter
+	MOV A, #'V'
+	ACALL sendCharacter
+	MOV A, #'E'
+	ACALL sendCharacter
+	MOV A, #'L'
+	ACALL sendCharacter
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #'2'
+	ACALL sendCharacter
+	ACALL nivel2
+	JMP $
+
+printDerrota:
+	MOV A, #3
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #5
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #7
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #9
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #11
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #44
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #'P'
+	ACALL sendCharacter
+	MOV A, #'E'
+	ACALL sendCharacter
+	MOV A, #'R'
+	ACALL sendCharacter
+	MOV A, #'D'
+	ACALL sendCharacter
+	MOV A, #'E'
+	ACALL sendCharacter
+	MOV A, #'U'
+	ACALL sendCharacter
+	SJMP $
+
+nivel2:
+	ACALL printSeq2
+	loop:
+	ACALL leituraTeclado
+	JNB F0, loop
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
+	CJNE A, #'3', printDerrota
+	MOV 50h, A
+	CLR F0
+	ACALL delay
+	ROT6:
+	ACALL leituraTeclado
+	JNB F0, ROT6
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
+	CJNE A, #'7', printDerrota
+	MOV 50h, A
+	CLR F0
+	ACALL delay
+	ROT7:
+	ACALL leituraTeclado
+	JNB F0, ROT7
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
+	CJNE A, #'9', printDerrota
+	MOV 50h, A
+	CLR F0
+	ACALL delay
+	ROT8:
+	ACALL leituraTeclado
+	JNB F0, ROT8
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
+	CJNE A, #'2', ponte
+	ponte:
+		ACALL printDerrota
+	MOV 50h, A
+	CLR F0
+	ACALL delay
+	ROT9:
+	ACALL leituraTeclado
+	JNB F0, ROT9
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
+	CJNE A, #'5', ponte
+	MOV 50h, A
+	CLR F0
+	ACALL delay
+	ROT10:
+	ACALL leituraTeclado
+	JNB F0, ROT10
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
+	CJNE A, #'4', printDerrota2
+	MOV 50h, A
+	CLR F0
+	ACALL delay
+	ROT11:
+	ACALL leituraTeclado
+	JNB F0, ROT11
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
+	CJNE A, #'1', printDerrota2
+	MOV 50h, A
+	CLR F0
+	ACALL delay
+	ROT12:
+	ACALL leituraTeclado
+	JNB F0, ROT12
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
+	CJNE A, #'0', printDerrota2
+	MOV 50h, A
+	CLR F0
+	ACALL delay
+	ROT13:
+	ACALL leituraTeclado
+	JNB F0, ROT13
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
+	CJNE A, #'6', printDerrota2
+	MOV 50h, A
+	CLR F0
+	ACALL delay
+	ROT14:
+	ACALL leituraTeclado
+	JNB F0, ROT14
+	MOV A, #40h
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0
+	CJNE A, #'8', printDerrota2
+	MOV 50h, A
+	CLR F0
+	ACALL delay
+	
+	MOV A, #44
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
 	MOV A, #'V'
 	ACALL sendCharacter
 	MOV A, #'E'
@@ -99,11 +356,33 @@ ROTINA:
 	ACALL sendCharacter
 	MOV A, #'U'
 	ACALL sendCharacter
-	JMP $
+	RET
 
-printDerrota:
-	MOV A, #42
+printDerrota2:
+	MOV A, #3
 	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #5
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #7
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #9
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #11
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
+	MOV A, #44
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
 	MOV A, #'P'
 	ACALL sendCharacter
 	MOV A, #'E'
@@ -167,6 +446,29 @@ printSeq:
 	MOV P2, #0FFH
 	RET
 
+printSeq2:
+	ACALL PRINT3
+	ACALL delay
+	ACALL PRINT7
+	ACALL delay
+	ACALL PRINT9
+	ACALL delay
+	ACALL PRINT2
+	ACALL delay
+	ACALL PRINT5
+	ACALL delay
+	ACALL PRINT4
+	ACALL delay
+	ACALL PRINT1
+	ACALL delay
+	ACALL PRINT0
+	ACALL delay
+	ACALL PRINT6
+	ACALL delay
+	ACALL PRINT8
+	ACALL delay
+	MOV P2, #0FFH
+	RET
 
 leituraTeclado:
 	MOV R0, #0			; clear R0 - the first key is key0
