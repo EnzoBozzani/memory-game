@@ -8,11 +8,6 @@ org 0000h
 org 0030h
 START:
 	MOV 50H, #0
-	MOV 30H, #8
-	MOV 31H, #3
-	MOV 32H, #5
-	MOV 33H, #9
-	MOV 34H, #1
 	MOV 40H, #'#' 
 	MOV 41H, #'0'
 	MOV 42H, #'*'
@@ -28,30 +23,6 @@ START:
 	ACALL MAIN 
  
 printDerrota0:
-	MOV A, #3
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #5
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #7
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #9
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #11
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #44
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
 	MOV A, #'P'
 	ACALL sendCharacter
 	MOV A, #'E'
@@ -80,11 +51,8 @@ ROTINA:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'8', printDerrota0
+	SUBB A, #30h
 	MOV 50H, A
-	MOV A, #3
-	ACALL posicionaCursor
-	MOV A, 50H
-	ACALL sendCharacter
 	CLR F0
 	ACALL delay
 	ROT2:
@@ -95,11 +63,8 @@ ROTINA:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'3', printDerrota0
+	SUBB A, #30h
 	MOV 50H, A
-	MOV A, #5
-	ACALL posicionaCursor
-	MOV A, 50H
-	ACALL sendCharacter
 	CLR F0
 	ACALL delay
 	ROT3:
@@ -110,11 +75,8 @@ ROTINA:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'5', ponte0
+	SUBB A, #30h
 	MOV 50H, A
-	MOV A, #7
-	ACALL posicionaCursor
-	MOV A, 50H
-	ACALL sendCharacter
 	CLR F0
 	ACALL delay
 	ROT4:
@@ -125,11 +87,8 @@ ROTINA:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'9', printDerrota
+	SUBB A, #30h
 	MOV 50H, A
-	MOV A, #9
-	ACALL posicionaCursor
-	MOV A, 50H
-	ACALL sendCharacter
 	CLR F0
 	ACALL delay
 	ROT5:
@@ -140,33 +99,10 @@ ROTINA:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'1', printDerrota
+	SUBB A, #30h
 	MOV 50H, A
-	MOV A, #11
-	ACALL posicionaCursor
-	MOV A, 50H
-	ACALL sendCharacter
 	CLR F0
 	ACALL delay
-	MOV A, #3
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #5
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #7
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #9
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #11
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
 	MOV A, #44
 	ACALL posicionaCursor
 	MOV A, #'N'
@@ -187,26 +123,6 @@ ROTINA:
 	JMP $
 
 printDerrota:
-	MOV A, #3
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #5
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #7
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #9
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #11
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
 	MOV A, #44
 	ACALL posicionaCursor
 	MOV A, #' '
@@ -225,6 +141,10 @@ printDerrota:
 	ACALL sendCharacter
 	SJMP $
 
+
+ponte:
+	ACALL printDerrota
+
 nivel2:
 	ACALL printSeq2
 	loop:
@@ -235,7 +155,8 @@ nivel2:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'3', printDerrota
-	MOV 50h, A
+	SUBB A, #30h
+	MOV 50H, A
 	CLR F0
 	ACALL delay
 	ROT6:
@@ -246,7 +167,8 @@ nivel2:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'7', printDerrota
-	MOV 50h, A
+	SUBB A, #30h
+	MOV 50H, A
 	CLR F0
 	ACALL delay
 	ROT7:
@@ -257,7 +179,8 @@ nivel2:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'9', printDerrota
-	MOV 50h, A
+	SUBB A, #30h
+	MOV 50H, A
 	CLR F0
 	ACALL delay
 	ROT8:
@@ -268,9 +191,8 @@ nivel2:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'2', ponte
-	ponte:
-		ACALL printDerrota
-	MOV 50h, A
+	SUBB A, #30h
+	MOV 50H, A
 	CLR F0
 	ACALL delay
 	ROT9:
@@ -281,7 +203,8 @@ nivel2:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'5', ponte
-	MOV 50h, A
+	SUBB A, #30h
+	MOV 50H, A
 	CLR F0
 	ACALL delay
 	ROT10:
@@ -292,7 +215,8 @@ nivel2:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'4', printDerrota2
-	MOV 50h, A
+	SUBB A, #30h
+	MOV 50H, A
 	CLR F0
 	ACALL delay
 	ROT11:
@@ -303,7 +227,8 @@ nivel2:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'1', printDerrota2
-	MOV 50h, A
+	SUBB A, #30h
+	MOV 50H, A
 	CLR F0
 	ACALL delay
 	ROT12:
@@ -314,7 +239,8 @@ nivel2:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'0', printDerrota2
-	MOV 50h, A
+	SUBB A, #30h
+	MOV 50H, A
 	CLR F0
 	ACALL delay
 	ROT13:
@@ -325,7 +251,8 @@ nivel2:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'6', printDerrota2
-	MOV 50h, A
+	SUBB A, #30h
+	MOV 50H, A
 	CLR F0
 	ACALL delay
 	ROT14:
@@ -336,7 +263,8 @@ nivel2:
 	MOV R0, A
 	MOV A, @R0
 	CJNE A, #'8', printDerrota2
-	MOV 50h, A
+	SUBB A, #30h
+	MOV 50H, A
 	CLR F0
 	ACALL delay
 	
@@ -359,26 +287,6 @@ nivel2:
 	RET
 
 printDerrota2:
-	MOV A, #3
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #5
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #7
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #9
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
-	MOV A, #11
-	ACALL posicionaCursor
-	MOV A, #' '
-	ACALL sendCharacter
 	MOV A, #44
 	ACALL posicionaCursor
 	MOV A, #' '
