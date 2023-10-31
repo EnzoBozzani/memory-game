@@ -6,7 +6,6 @@ org 0000h
 	LJMP START
 
 org 0030h
-;atribuídos os valores para uso do teclado matricial
 START:
 	MOV 50H, #0
 	MOV 40H, #'#' 
@@ -23,8 +22,11 @@ START:
 	MOV 4BH, #'1'	
 	ACALL MAIN 
  
-;sub rotina que imprime no LCD que o usuário perdeu
 printDerrota0:
+	MOV A, #44
+	ACALL posicionaCursor
+	MOV A, #' '
+	ACALL sendCharacter
 	MOV A, #'P'
 	ACALL sendCharacter
 	MOV A, #'E'
@@ -39,18 +41,13 @@ printDerrota0:
 	ACALL sendCharacter
 	SJMP $
 
-;ponte para que funcione o pulo do CJNE
 ponte0:
 	ACALL printDerrota0
 
 MAIN:
-	;início do LCD e impressão da sequência no display hexadecimal
 	ACALL lcd_init
+	ACALL printTitulo
 	ACALL printSeq
-;rotinas que leem o teclado e comparam com os valores da sequência
-;para cada rotina, é lido o valor, comparado com a sequência. 
-;Se for diferente, pula para o printDerrota
-;Se for igual, exibe no endereço 50H o valor e continua a ler o teclado
 ROTINA:
 	ACALL leituraTeclado
 	JNB F0, ROTINA
@@ -82,7 +79,7 @@ ROTINA:
 	ADD A, R0
 	MOV R0, A
 	MOV A, @R0
-	CJNE A, #'5', ponte0
+	CJNE A, #'5', printDerrota0
 	SUBB A, #30h
 	MOV 50H, A
 	CLR F0
@@ -111,8 +108,6 @@ ROTINA:
 	MOV 50H, A
 	CLR F0
 	ACALL delay
-	;caso o usuário não perca em nenhum momento, é 
-	;exibido no LCD que o nivel 2 irá iniciar
 	MOV A, #44
 	ACALL posicionaCursor
 	MOV A, #'N'
@@ -132,7 +127,6 @@ ROTINA:
 	ACALL nivel2
 	JMP $
 
-;sub rotina que imprime no LCD que o usuário perdeu
 printDerrota:
 	MOV A, #44
 	ACALL posicionaCursor
@@ -152,12 +146,10 @@ printDerrota:
 	ACALL sendCharacter
 	SJMP $
 
-;ponte para que funcione o pulo do CJNE
+
 ponte:
 	ACALL printDerrota
 
-;nível 2 seguindo a mesma lógica que o nível 1, 
-;porém com 10 números ao invés de 5 
 nivel2:
 	ACALL printSeq2
 	loop:
@@ -280,7 +272,7 @@ nivel2:
 	MOV 50H, A
 	CLR F0
 	ACALL delay
-	;informado ao usuário que ele venceu
+	
 	MOV A, #44
 	ACALL posicionaCursor
 	MOV A, #' '
@@ -299,7 +291,6 @@ nivel2:
 	ACALL sendCharacter
 	RET
 
-;sub rotina que imprime no LCD que o usuário perdeu
 printDerrota2:
 	MOV A, #44
 	ACALL posicionaCursor
@@ -319,7 +310,6 @@ printDerrota2:
 	ACALL sendCharacter
 	SJMP $
 
-;sub rotina que imprime no LCD o título
 printTitulo:	
 	MOV A, #1
 	ACALL posicionaCursor
@@ -355,9 +345,6 @@ printTitulo:
 	ACALL sendCharacter
 	RET
 
-;sub rotina que printa a sequência 1 no display
-; (usando sub rotinas que imprimem cada número no 
-; display, setando ou não os bits de P2)
 printSeq:
 	ACALL PRINT8
 	ACALL delay
@@ -372,9 +359,6 @@ printSeq:
 	MOV P2, #0FFH
 	RET
 
-;sub rotina que printa a sequência 2 no display
-; (usando sub rotinas que imprimem cada número no 
-; display, setando ou não os bits de P2)
 printSeq2:
 	ACALL PRINT3
 	ACALL delay
